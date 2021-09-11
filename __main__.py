@@ -40,7 +40,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 
 def tts_command(update: Update, context: CallbackContext) -> None:
     if update.message and context.args:
-        update.message.reply_audio(_get_tts(" ".join(context.args)))
+        update.message.reply_voice(_get_tts(" ".join(context.args)))
 
 
 def text_command(update: Update, context: CallbackContext) -> None:
