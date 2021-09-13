@@ -9,7 +9,12 @@ from telegram.ext import (
     Filters,
     CallbackContext,
 )
-from blasphemy import generate_audio_blasphemy, generate_blasphemy, _get_tts
+from blasphemy import (
+    generate_audio_blasphemy,
+    generate_blasphemy,
+    _get_tts,
+    generate_graphic_blasphemy,
+)
 
 
 # Enable logging
@@ -50,9 +55,7 @@ def text_command(update: Update, context: CallbackContext) -> None:
 
 def image_command(update: Update, context: CallbackContext) -> None:
     if update.message:
-        update.message.reply_photo(
-            "https://3.bp.blogspot.com/-WEE8Wq0MW_Y/WyYXISuE4wI/AAAAAAAARIA/P7oa00q9VyYOVCCjccuDmYb0QQkzUCASwCLcBGAs/s400/Dolce%2BGes%25C3%25B9.jpg"
-        )
+        update.message.reply_photo(generate_graphic_blasphemy())
 
 
 def voice_command(update: Update, context: CallbackContext) -> None:

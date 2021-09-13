@@ -10,6 +10,7 @@ python = "^3.9"
 python-telegram-bot = {version = "^13.7", extras = ["ujson"]}
 Pillow = "^8.3.2"
 requests = "^2.26.0"
+colorthief = "^0.2.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.7b0"
