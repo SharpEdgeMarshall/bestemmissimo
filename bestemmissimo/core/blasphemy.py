@@ -1,9 +1,9 @@
 from io import BytesIO
 from random import randint
-from utils import text_wrap
 import requests
 from PIL import Image, ImageFont, ImageDraw
 from colorthief import ColorThief
+from .utils import text_wrap
 
 
 def _get_text_blasphemy() -> str:
