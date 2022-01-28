@@ -1,5 +1,6 @@
 from io import BytesIO
-from random import randint
+from random import randint, shuffle
+from datetime import datetime
 import requests
 from PIL import Image, ImageFont, ImageDraw
 from colorthief import ColorThief
@@ -20,11 +21,19 @@ def _get_tts(text: str):
 
 
 def generate_graphic_blasphemy():
-    res = requests.get(
-        "https://3.bp.blogspot.com/-WEE8Wq0MW_Y/WyYXISuE4wI/AAAAAAAARIA/P7oa00q9VyYOVCCjccuDmYb0QQkzUCASwCLcBGAs/s400/Dolce%2BGes%25C3%25B9.jpg",
-    )
+    date_now = datetime.today().strftime("%Y-%m-%d")
+    qs = {"data": date_now}
+    saints = requests.get("https://www.santodelgiorno.it/santi.json", params=qs).json()
+    shuffle(saints)
+    urlimage = "https://3.bp.blogspot.com/-WEE8Wq0MW_Y/WyYXISuE4wI/AAAAAAAARIA/P7oa00q9VyYOVCCjccuDmYb0QQkzUCASwCLcBGAs/s400/Dolce%2BGes%25C3%25B9.jpg"
+    for saint in saints:
+        if "urlimmagine" in saint:
+            urlimage = saint["urlimmagine"]
+    res = requests.get(urlimage)
     text = _get_text_blasphemy()
     img = Image.open(BytesIO(res.content))
+
+    img = img.crop((0, 0, img.width, img.height - (img.height / 6)))
 
     color_thief = ColorThief(BytesIO(res.content))
     dominant_color = color_thief.get_color(quality=1)
@@ -39,7 +48,7 @@ def generate_graphic_blasphemy():
     # Randomly select x-axis
     ran_x = randint(x_min, x_max)
 
-    font = ImageFont.truetype("fonts/moonbright.ttf", 35)
+    font = ImageFont.truetype("fonts/moonbright.ttf", 40)
 
     lines = text_wrap(text, font, img.size[0] - ran_x)
     line_height = font.getsize("hg")[1]
@@ -49,7 +58,6 @@ def generate_graphic_blasphemy():
     y_max -= len(lines) * line_height  # Adjust
     ran_y = randint(y_min, y_max)  # Generate random point
 
-    color = "rgb(255,255,255)"
     draw = ImageDraw.Draw(img)
 
     x = ran_x
@@ -58,10 +66,10 @@ def generate_graphic_blasphemy():
         draw.text(
             (x, y),
             line,
-            fill=opposite_color,
+            fill=(255, 255, 255),
             font=font,
-            stroke_fill=color,
-            stroke_width=2,
+            stroke_fill=(0, 0, 0),
+            stroke_width=1,
         )
 
         y = y + line_height  # update y-axis for new line
