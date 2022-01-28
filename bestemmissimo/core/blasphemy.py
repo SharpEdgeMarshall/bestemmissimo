@@ -43,12 +43,12 @@ def generate_graphic_blasphemy():
         abs(dominant_color[2] - 255),
     )
 
-    x_min = (img.size[0] * 8) // 100
-    x_max = (img.size[0] * 50) // 100
+    x_min = (img.size[0] * 5) // 100
+    x_max = (img.size[0] * 30) // 100
     # Randomly select x-axis
     ran_x = randint(x_min, x_max)
 
-    font = ImageFont.truetype("fonts/moonbright.ttf", 40)
+    font = ImageFont.truetype("fonts/hate.ttf", 45)
 
     lines = text_wrap(text, font, img.size[0] - ran_x)
     line_height = font.getsize("hg")[1]
